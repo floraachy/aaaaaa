@@ -22,7 +22,7 @@ workflow:
     input:
       boot_webhook_url: ((dingding.dingding_webhook))
       msg_title: '"gitlink定制节点测试"'
-      msg_text: trigger.git_event,trigger.branch,trigger.commit_number,trigger.is_fork,trigger.last_commit_message,trigger.pusher
+      msg_text: trigger.last_commit_message
       single_title: '""'
       single_url: '""'
       btns: '"[]"'
