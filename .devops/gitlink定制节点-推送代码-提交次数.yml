@@ -1,0 +1,36 @@
+version: 2
+name: gitlink定制节点-推送代码-提交次数
+description: ""
+global:
+  concurrent: false
+trigger:
+  webhook: gitlink@1.0.0
+  event:
+    - ref: push
+      ruleset:
+        - param-ref: commit_number
+          operator: EQ
+          value: "2"
+      ruleset-operator: AND
+workflow:
+  - ref: start
+    name: 开始
+    task: start
+  - ref: dingtalk_notice_action_card_0
+    name: 钉钉通知-ActionCard
+    task: dingtalk_notice_action_card@1.0.2
+    input:
+      boot_webhook_url: ((dingding.dingding_webhook))
+      msg_title: '"gitlink定制节点测试"'
+      msg_text: trigger.last_commit_message
+      single_title: '""'
+      single_url: '""'
+      btns: '"[]"'
+    needs:
+      - start
+  - ref: end
+    name: 结束
+    task: end
+    needs:
+      - dingtalk_notice_action_card_0
+
